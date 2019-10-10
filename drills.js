@@ -53,4 +53,9 @@ function main7() {
     console.log(shuffle(myArray, 500))
 }
 
-main7()
+function main8() {
+    books = ['p57pb7jmca2vupf7vyf1','ojb4v58aqawzndcf0dp9','ltvwfuvxvo6qw8y6v98h','qtxo5mhilnpzn5psp8eb','1j8ybg5d3z324sbjw36h','1mbetraz2dkswvbxk669','29o1tp60pxgce0d7ld72','fij3og78gcl1dth6bf0v','a92ay2hw67uf3upfr3o3','5sdz0mifj8l7tebjjub0','j7nhmpsfwnzaie3trk2v','4jnh6yzfq4rkjiqha2gh','1sj59lh2zugh9nt3cv1p','j8vvdof1lhj8hne4r40s','zn7om5s49ct2an9bfvor','cqv2x5nsmlqry97mye95','hgrlka7dn1da29meqoap','8dwvvu6g8z2pfuwgdujj','ikbkz2ku4iwlu8dpxrfm','c0r6eteec4m1qcpgsxm5']
+    console.log(quickSort(books))
+}
+
+main8()
