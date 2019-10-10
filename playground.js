@@ -4,7 +4,7 @@ const quickSort = require('./quick')
 
 let testArray =  []
 
-for (let i = 0; i < 5000; i++) {
+for (let i = 0; i < 6000; i++) {
     testArray.push(Math.floor(Math.random() * Math.floor(10000)))
 }
 

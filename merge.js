@@ -1,4 +1,5 @@
 function mergeSort(array) {
+    //console.log(array)
     if (array.length <= 1) {
         return array;
     }
@@ -13,6 +14,7 @@ function mergeSort(array) {
 };
 
 function merge(left, right, array) {
+    //console.log(left + ' - ' + right)
     let leftIndex = 0;
     let rightIndex = 0;
     let outputIndex = 0;
@@ -32,6 +34,7 @@ function merge(left, right, array) {
     for (let i = rightIndex; i < right.length; i++) {
         array[outputIndex++] = right[i];
     }
+    //console.log(array)
     return array;
 };
 
