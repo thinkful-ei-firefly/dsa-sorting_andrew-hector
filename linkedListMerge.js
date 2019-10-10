@@ -1,116 +1,71 @@
 const { LinkedList, _Node } = require('./LinkedList');
 
-function mergeSortLL(list) {
-  //check if list is empty
-  if (list.size() <= 1) {
+const getListSize = list => {
+  let counter = 0;
+  let tempNode = list.head;
+  while (tempNode !== null) {
+    counter++;
+    tempNode = tempNode.next;
+  }
+  return counter;
+};
+
+const mSortLL = list => {
+  const listSize = getListSize(list);
+  if (listSize <= 1) {
+    // console.log('returning list '+list)
     return list;
   }
-
-  let left = new LinkedList();
-  let right = new LinkedList();
-
-  let leftCurrNode = null;
-  for (let i = 0; i < Math.floor(list.size() / 2); i++) {
-    if (i === 0) {
-      leftCurrNode = list.head;
-    }
-    left.insertLast(leftCurrNode.value);
-    leftCurrNode = leftCurrNode.next;
+  const mid = Math.floor(listSize / 2);
+  let leftList = new LinkedList();
+  let rightList = new LinkedList();
+  let tempNode = list.head;
+  for (let i = 0; i < mid; i++) {
+    leftList.insertLast(tempNode.value);
+    tempNode = tempNode.next;
   }
-  let rightCurrNode = null;
-  for (let i = Math.floor(list.size() / 2); i < list.size(); i++) {
-    if (i === Math.floor(list.size() / 2) + 1) {
-      rightCurrNode = leftCurrNode;
-    }
-    right.insertLast(rightCurrNode.value);
-    rightCurrNode = rightCurrNode.next;
+  rightList.head = tempNode;
+  // console.log('before mSort left is '+leftList)
+  leftList = mSortLL(leftList);
+  // console.log('after mSort left is '+leftList)
+  // console.log('before mSort right is '+rightList)
+  rightList = mSortLL(rightList);
+  // console.log('after mSort right is '+rightList)
+  return mergeLL(leftList, rightList);
+};
+
+const mergeLL = (left, right) => {
+  let leftNode = left.head;
+  let rightNode = right.head;
+  let mergedList = new LinkedList();
+  if (leftNode.value <= rightNode.value) {
+    mergedList.insertFirst(leftNode.value);
+    leftNode = leftNode.next;
+  } else {
+    mergedList.insertFirst(rightNode.value);
+    rightNode = rightNode.next;
   }
-  return mergeLL(mergeSortLL(left), mergeSortLL(right));
-}
-
-function mergeLL(left, right) {
-  let newLL = new LinkedList();
-  let resultPtr = newLL.head;
-  let leftPtr = left.head;
-  let rightPtr = right.head;
-
-  while (leftPtr && rightPtr) {
-    let tempNode = null;
-    if (leftPtr.value > rightPtr.value) {
-      tempNode = rightPtr.value;
-      rightPtr = rightPtr.next;
-    } else {
-      tempNode = leftPtr.value;
-      leftPtr = leftPtr.next;
-    }
-
-    if (!newLL.head) {
-      newLL.head = new _Node(tempNode, null);
-      resultPtr = newLL.head;
-    } else {
-      resultPtr.next = new _Node(tempNode, null);
-      resultPtr = newLL.head;
-    }
+  let mergedNode = mergedList.head;
+  while (leftNode && rightNode) {
+    if (leftNode.value <= rightNode.value) {
+      mergedList.insertLast(leftNode.value);
+      mergedNode = mergedNode.next;
+      leftNode = leftNode.next;
+    } else if (rightNode.value < leftNode.value) {
+      mergedList.insertLast(rightNode.value);
+      mergedNode = mergedNode.next;
+      rightNode = rightNode.next;
+    } else console.log('oops');
   }
-  resultPtr.next = leftPtr;
-  while (resultPtr.next) {
-    resultPtr = resultPtr.next;
-    resultPtr.next = rightPtr;
+  while (leftNode) {
+    mergedList.insertLast(leftNode.value);
+    mergedNode = mergedNode.next;
+    leftNode = leftNode.next;
   }
-  return null;
-}
-
-const sortData = [
-  89,
-  30,
-  25,
-  32,
-  72,
-  70,
-  51,
-  42,
-  25,
-  24,
-  53,
-  55,
-  78,
-  50,
-  13,
-  40,
-  48,
-  32,
-  26,
-  2,
-  14,
-  33,
-  45,
-  72,
-  56,
-  44,
-  21,
-  88,
-  27,
-  68,
-  15,
-  62,
-  93,
-  98,
-  73,
-  28,
-  16,
-  46,
-  87,
-  28,
-  65,
-  38,
-  67,
-  16,
-  85,
-  63,
-  23,
-  69,
-  64,
-  91
-];
-
-console.log(mergeSortLL(sortData));
+  while (rightNode) {
+    mergedList.insertLast(rightNode.value);
+    mergedNode = mergedNode.next;
+    rightNode = rightNode.next;
+  }
+  return mergedList;
+};
